@@ -1,0 +1,72 @@
+*.d
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.pyc
+Ubuntu/
+asl/
+edk2/.mailmap
+edk2/.pytool/
+edk2/ArmPkg/
+edk2/ArmPlatformPkg/
+edk2/ArmVirtPkg/
+edk2/BaseTools/Bin
+edk2/BaseTools/BinPipWrappers
+edk2/BaseTools/BinWrappers
+edk2/BaseTools/Lib
+edk2/BaseTools/Plugin
+edk2/BaseTools/Scripts
+edk2/BaseTools/Tests
+edk2/BaseTools/UserManuals
+edk2/BaseTools/basetools_calling_path_env.yaml
+edk2/BaseTools/basetools_path_env.yaml
+edk2/BaseTools/BuildEnv
+edk2/BaseTools/Edk2ToolsBuild.py
+edk2/BaseTools/get_vsvars.bat
+edk2/BaseTools/GNUmakefile
+edk2/BaseTools/Makefile
+edk2/BaseTools/ReadMe.rst
+edk2/BaseTools/set_vsprefix_envs.bat
+edk2/BaseTools/toolsetup.bat
+edk2/Build/
+edk2/Conf/
+edk2/CONTRIBUTING.md
+edk2/CryptoPkg/
+edk2/DynamicTablesPkg/
+edk2/EmbeddedPkg/
+edk2/EmulatorPkg/Win/VS2017/
+edk2/EmulatorPkg/build.sh
+edk2/FatPkg/
+edk2/FmpDevicePkg/
+edk2/IntelFsp2Pkg/
+edk2/IntelFsp2WrapperPkg/
+edk2/License-History.txt
+edk2/License.txt
+edk2/Maintainers.txt
+edk2/NetworkPkg/
+edk2/PcAtChipsetPkg/
+edk2/PrmPkg/
+edk2/ReadMe.rst
+edk2/RedfishPkg/
+edk2/SecurityPkg/
+edk2/SignedCapsulePkg/
+edk2/SourceLevelDebugPkg/
+edk2/StandaloneMmPkg/
+edk2/UefiCpuPkg/
+edk2/UefiPayloadPkg/
+edk2/UnitTestFrameworkPkg/
+edk2/edksetup.sh
+edk2/pip-requirements.txt
+jupyter/
+nasm/
+python/.ipynb_checkpoints/
+python/How to Host a MySQL Server on Linux.mp4
+python/Python MySQL Tutorial - Creating Tables, Inserting & Selecting.mp4
+python/Python MySQL Tutorial - Foreign Keys & Relating Tables.mp4
+python/Python MySQL Tutorial - Selecting Data & Altering Tables.mp4
+python/Python MySQL Tutorial - Setup & Basic Queries (w  MySQL Connector).mp4
+python/Python SQLite Tutorial Complete Overview - Creating a Database, Table, and Running Queries.mp4
+python/SQLite Databases With Python - Full Course.mp4
+qemu/
