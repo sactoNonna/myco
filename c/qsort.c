@@ -11,20 +11,12 @@
 #define SUCCESS 0
 #define ERROR   -1
 
-
 void displayTime(time_t t, char *string) {
-    printf("\n\t%s", string);
+    printf("%s", string);
     printf("%s", asctime(gmtime(&t)));
 }
 
 void displayRuntime(time_t t1, time_t t2) {
-    //// For reference:
-    //struct tm *time_info;
-    //char time_str[80]; // Assuming the time string won't exceed 100 characters
-    //// Convert the current time to a local time
-    //time_info = localtime(&t);
-    //// Format the time according to the specified format string
-    ////strftime(time_str, sizeof(time_str), "%Y-%m-%d %H:%M:%S", time_info);
 
     double elapsedTime;
     int hours, minutes, seconds;
@@ -41,10 +33,10 @@ void displayRuntime(time_t t1, time_t t2) {
 
 int main(int argc, char *argv[]) {
     //int maxBuf = atoi(argv[1]);
-    int maxBuf = 10000000;
+    int maxBuf = 1000000;
     int *arr, *brr, *crr, *newArr;
     time_t t = 0, t1, t2;
-    void displayTime(time_t t);
+    void displayTime(time_t t, char *s);
     void displayRuntime(time_t t1, time_t t2);
     int i, bStart, bEnd;
     void selectionSort(int *arr, int bStart, int bEnd);
@@ -52,7 +44,6 @@ int main(int argc, char *argv[]) {
     void mergeSort(int *newArr, int *arr, int bStart, int bEnd);
     void merge(int *newArr, int *arr, int lStart, int lEnd, int rStart, int rEnd);
     void quickSort(int *arr, int bStart, int bEnd);
-    int binarySearch(int n);
     void swap(int *px, int *py); 
     void arrCpy(int *dest, int *src, int bStart, int bEnd);
     int arrCmp(int *dest, int *src, int bStart, int bEnd);
@@ -72,33 +63,45 @@ int main(int argc, char *argv[]) {
         free(brr);
         return ERROR;
     }
-    ////
-    //maxBuf = 30;
+
     bStart = 0;
     bEnd = maxBuf-1;
     for (i = 0; i < maxBuf; i++)
         arr[i] = (int)rand() % (bEnd - bStart + 1);
 
     arrCpy(brr, arr, bStart, bEnd);
-    printf("\nSelected array copied in brr: \n\tbrr [] = ");
-    printArr(brr, bStart, bEnd);
+    printf("\nArray for %u(0x%08x) elements created.\n",(bEnd-bStart+1),(bEnd-bStart+1));
+    //printArr(brr, bStart, bEnd);
 
-// quickSort() - 1
+// quickSort() - 1: The last element as pivot
 
-    printf("\n\n\nfrom quickSort - 1 - before: \n\tarr [] = ");
-    printArr(arr, bStart, bEnd);
+    printf("\n\nQuickSort1 - The last element as pivot:");
+    //printArr(arr, bStart, bEnd);
     t1 = time(NULL);
-    displayTime((time_t)t1, "Start Time: ");
-
+    displayTime((time_t)t1, "\n\t\tStart Time: ");
     jvQuicksort(arr, bStart, bEnd);
-
     t2 = time(NULL);
-    displayTime((time_t)t2, "End Time: ");
+    displayTime((time_t)t2, "\t\tEnd Time: ");
     displayRuntime(t1, t2);
-    printf("\nfrom quickSort - 1 - after: \n\tarr [] = ");
-    printArr(arr, bStart, bEnd);
+    //printArr(arr, bStart, bEnd);
     arrCpy(crr, arr, bStart, bEnd);
     arrCpy(arr, brr, bStart, bEnd);
+
+// quickSort() - 2: The middle element as pivot    
+
+    printf("\n\nQuickSort2 - The middle element as pivot:"); 
+    arrCpy(arr, brr, bStart, bEnd);
+    t1 = time(NULL);
+    displayTime((time_t)t1, "\n\t\tStart Time: ");
+    quickSort(arr, bStart, bEnd);
+    t2 = time(NULL);
+    displayTime((time_t)t2, "\t\tEnd Time: ");
+    displayRuntime(t1, t2);
+
+    if (arrCmp(crr, arr, bStart, bEnd) == False) 
+        return(printf ("ERROR: The results from QuickSort1 and QuickSort2 are different!\n"));
+    else
+        printf ("SUCCESS: The results from QuickSort1 and QuickSort2 are the same.\n");
 
 // mergeSort()
 
@@ -107,82 +110,57 @@ int main(int argc, char *argv[]) {
         printf("malloc error - exiting...\n");
         return ERROR;    
     }
-    printf("\n\n\nfrom mergeSort - before: \n\tarr [] = ");
-    printArr(arr, bStart, bEnd);
-
+    printf("\n\nMergeSort:");
+    //printArr(arr, bStart, bEnd);
     t1 = time(NULL);
-    displayTime((time_t)t1, "Start Time: ");   
-
+    displayTime((time_t)t1, "\n\t\tStart Time: ");   
     mergeSort(newArr, arr, bStart, bEnd);
-
     t2 = time(NULL);
-    displayTime((time_t)t2, "End Time: ");
+    displayTime((time_t)t2, "\t\tEnd Time: ");
     displayRuntime(t1, t2);
 
     if (arrCmp(crr, newArr, bStart, bEnd) == False) 
-        return(printf ("ERROR: The result from mergeSort is different from others!\n"));
+        return(printf ("ERROR: The result from MergeSort is different from others!\n"));
     else
-        printf ("SUCCESS: The result from mergeSort is the same as others.\n");
-    return 0;
-////////////////////////
+        printf ("SUCCESS: The result from MergeSort is the same as others.\n");
+
 // selectionSort()
 
-    printf("\n\n\nfrom selectionSort - before: \n\tarr [] = ");
-    printArr(arr, bStart, bEnd);
-
+    printf("\n\nSelectionSort:");
+    //printArr(arr, bStart, bEnd);
     t1 = time(NULL);
-    displayTime((time_t)t1, "Start Time: ");
-
+    displayTime((time_t)t1, "\n\t\tStart Time: ");
     selectionSort(arr, bStart, bEnd);
-
     t2 = time(NULL);
-    displayTime((time_t)t2, "End Time: ");
+    displayTime((time_t)t2, "\t\tEnd Time: ");
     displayRuntime(t1, t2);
 
     if (arrCmp(crr, arr, bStart, bEnd) == False) 
-        return(printf ("ERROR: The results from quickSort and selectionSort are different!\n"));
+        return(printf ("ERROR: The result from SelectionSort is different from others!\n"));
     else
-        printf ("SUCCESS: The results from quickSort and selectionSort are the same.\n");
+        printf ("SUCCESS: The result from SelectionSort is the same as others.\n");
 
 // bubbleSort()
 
     arrCpy(arr, brr, bStart, bEnd);
-    printf("\n\n\nfrom bubbleSort - before: \n\tarr [] = ");
-    printArr(arr, bStart, bEnd);
-
+    printf("\n\nBubbleSort:");
+    //printArr(arr, bStart, bEnd);
     t1 = time(NULL);
-    displayTime((time_t)t1, "Start Time: ");
-
+    displayTime((time_t)t1, "\n\t\tStart Time: ");
     bubbleSort(arr, bStart, bEnd);
-
     t2 = time(NULL);
-    displayTime((time_t)t2, "End Time: ");
+    displayTime((time_t)t2, "\t\tEnd Time: ");
     displayRuntime(t1, t2);
 
     if (arrCmp(crr, arr, bStart, bEnd) == False) 
-        return(printf ("ERROR: The result from bubbleSort is different from others!\n"));
+        return(printf ("ERROR: The result from BubbleSort is different from others!\n"));
     else
-        printf ("SUCCESS: The result from bubbleSort is the same as others.\n");
+        printf ("SUCCESS: The result from BubbleSort is the same as others.\n");
 
-/*
-    arrCpy(arr, brr, bStart, bEnd);
-    quickSort(arr, bStart, bEnd);
-    printf("\nfrom quickSort: \n\tarr [] = ");
-    printArr(arr, bStart, bEnd);
-    if ((arrCmp(crr, arr, bStart, bEnd) == False)  
-        return(printf ("ERROR: The result from quickSort is different!\n"));
-    else
-        printf ("SUCCESS: quickSort.\n");
-
-    index = binarySearch(brr[5]);
-    printf("\n\tbinarySearch: %i is at index = %i.\n", brr[5], index);
-    return SUCCESS;
-*/
     free(arr);
     free(brr);
     free(crr);
 }
-/////////////////////////////////////////////////////////
 
 void jvQuicksort (int* array, int lowIndex, int highIndex) {
     void jvSwap(int *array, int index1, int index2);
@@ -224,8 +202,6 @@ void jvSwap(int *array, int index1, int index2) {
     array[index1] = array[index2];
     array[index2] = temp;
 }
-
-/////////////////////////////////////////////////////////
 
 void selectionSort (int *arr, int bStart, int bEnd) {
     int i, j, iMin;
@@ -325,10 +301,6 @@ void bubbleSort (int *arr, int bStart, int bEnd) {
     return;
 }
 
-int binarySearch (int n) {
-    return n;
-}
-
 void qswap(int *arr, int i, int j)
 {
 	int temp;
@@ -370,33 +342,3 @@ void printArr (int *arr, int bStart, int bEnd) {
         printf("%i ", arr[i]);
     printf("\n");
 }
-
-    //int *arr;
-    //time_t t;
-    //int i, bStart, bEnd;
-    
-    //1.  time_t - defined in header <time.h> defined as a real arithmetic type capable of 
-    //    representing times.
-    //        typedef /* unspecified */ time_t;
-    //1.1 The standard uses the term calendar time when referring to a value of type time_t.
-    //    Although not defined by the C standard, this is almost always an integral value 
-    //    holding the number of seconds (not counting leap seconds) since 00:00, Jan 1 1970 UTC, 
-    //    corresponding to POSIX time.
-    //2.  time_t time(time_t *seconds) returns the time since the Epoch (00:00:00 UTC, January 1, 1970), measured in seconds.
-    //3.  %lu is used for unsigned long values and %zu is used for size_t values, but in practice, size_t is
-    //    just an unsigned long. CppCheck complains about it, but both work for both types. 
-    //4.  If you do not want to use the PRI* macros, another approach for printing ANY integer type is 
-    //    to cast to intmax_t or uintmax_t and use "%jd" or %ju, respectively.
-
-// time_t example
-    //time_t epoch = (unsigned int)(4*1024*1024*1024-1);
-    //printf("%jd seconds since the epoch began\n", (intmax_t)epoch);
-    //printf("%s", asctime(gmtime(&epoch)));
-
-    //srand(epoch = time(NULL));
-    //printf("%jd seconds since the epoch began\n", (intmax_t)epoch);
-    //printf("%s", asctime(gmtime(&epoch)));
-
-    //srand((unsigned int)time(&epoch));
-    //printf("%jd seconds since the epoch began\n", (intmax_t)epoch);
-    //printf("%s", asctime(gmtime(&epoch)));
